@@ -1,0 +1,43 @@
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        https://schema.spring.io/mvc/spring-mvc.xsd"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc">
+
+	<!-- Handler Mapping -->
+	<!-- <bean id="HandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean> -->
+
+	<!-- Controller Mapping -->
+	<!-- <bean name="/welcome.html" class="com.sanjay.controller.HelloController"></bean> -->
+
+
+	<!-- support JSR303 annotation if JSR 303 validation present on classpath -->
+	<mvc:annotation-driven />
+	<mvc:interceptors>
+		<bean class="com.sanjay.controller.DayOfWeekBasedInterceptor"></bean>
+	</mvc:interceptors>
+	<!-- View Mapping -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<context:component-scan base-package="com.sanjay.controller" />
+	<bean id="messageResource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/mymessages</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>
